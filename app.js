@@ -19,6 +19,12 @@ app.use((req, res) => {
 })
 
 app.use((err, req, res, next) => {
+  if (req.method === 'POST') {
+    res.status(400).json({message: err.message})
+  }
+  if (req.method === 'PUT') {
+    res.status(400).json({message: err.message})
+  }
   res.status(500).json({ message: err.message })
 })
 
