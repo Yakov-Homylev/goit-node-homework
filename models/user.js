@@ -25,6 +25,14 @@ const userSchema = Schema({
     avatarURL: {
       type: String,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
+    },
 })
 
 userSchema.methods.setPassword = function(password) {
@@ -43,11 +51,15 @@ const joiSchemaUserSubscription = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required()
 })
 
+const joiSchemaUserEmailReverify = Joi.object({
+  email: Joi.string().email().required(),
+})
 
 const User = model('user', userSchema)
 
 module.exports = {
     User,
     joiSchemaUserSignUp,
-    joiSchemaUserSubscription
+    joiSchemaUserSubscription,
+    joiSchemaUserEmailReverify
 }
